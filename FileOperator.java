@@ -27,6 +27,42 @@ public class FileOperator {
     public static double[] toDoubleArray(int arraySize) {
         return toDoubleArray(staticFilePath, arraySize);
     }
+
+    public static ArrayList<Integer> toIntList() {
+        ArrayList<Integer> list = new ArrayList<>();
+        try (Scanner input = new Scanner(new File(staticFilePath))) {
+            while (input.hasNextLine()) {
+                list.add(input.nextInt());
+            }
+        } catch (IOException e) {
+            System.out.println("File not found");
+        }
+        return list;
+    }
+
+    public static ArrayList<String> toStringList() {
+        ArrayList<String> list = new ArrayList<>();
+        try (Scanner input = new Scanner(new File(staticFilePath))) {
+            while (input.hasNextLine()) {
+                list.add(input.nextLine());
+            }
+        } catch (IOException e) {
+            System.out.println("File not found");
+        }
+        return list;
+    }
+
+    public static ArrayList<Double> toDoubleList() {
+        ArrayList<Double> list = new ArrayList<>();
+        try (Scanner input = new Scanner(new File(staticFilePath))) {
+            while (input.hasNextLine()) {
+                list.add(input.nextDouble());
+            }
+        } catch (IOException e) {
+            System.out.println("File not found");
+        }
+        return list;
+    }
     
     public static String[] toStringArray(String filePath, int arraySize) {
         String[] array = new String[arraySize];

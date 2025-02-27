@@ -1,12 +1,11 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import java.io.File;
-public class DataAnalyzer {
-    private static int[] list = {26, 15, 30, 52, 35, 35, 70, 0, 60, 65, 58, 72, 60, 17, 17, 81, 22, 4, 77, 29, 93, 19, 5, 63, 64, 78, 43, 14, 90, 24, 
-        55, 21, 45, 9, 90, 44, 17, 5, 28, 24, 16, 66, 73, 56, 74, 5, 97, 64, 58, 60, 24, 77, 17, 97, 38, 66, 85, 43, 89, 62, 
-        68, 44, 52, 35, 98, 5, 48, 31, 55, 36, 99, 46, 72, 90, 35, 58, 33, 78, 12, 72, 2, 78, 25, 78, 59, 29, 22, 7, 45, 2, 
-        28, 37, 44, 41, 3, 33, 28, 89, 32, 81};
+import java.io.IOException;
 
+public class DataAnalyzer {
     public static int linearSearch(int[] list, int target) {
         for (int i = 0; i < list.length; i++) if (list[i] == target) return i;
         return -1;
@@ -33,33 +32,154 @@ public class DataAnalyzer {
         return -1;
     }
 
-    public static void main(String[] args) {
-        int target = 7;
-        String[] fileContent = new String[100];
-        File file = new File("numbers.txt");
-
-        try{
-            Scanner input = new Scanner(file);
+    public static String[] toStringArray(String filePath, int arraySize) {
+        String[] array = new String[arraySize];
+        try (Scanner input = new Scanner(new File(filePath))) {
             int index = 0;
-            while (input.hasNextLine()) {
-                fileContent[index] = input.nextLine();
+            while (input.hasNextLine() && index < arraySize) {
+                array[index] = input.nextLine();
                 index++;
             }
-            input.close();
-        } catch (Exception e) {
+        }catch(IOException e){
             System.out.println("File not found");
         }
-        
-        for(int i = 0; i < fileContent.length; i++) {
-            list[i] = Integer.parseInt(fileContent[i]);
+        return array;
+    }
+
+    public static int[] toIntArray(String filePath, int arraySize) {
+        int[] array = new int[arraySize];
+        try (Scanner input = new Scanner(new File(filePath))) {
+            int index = 0;
+            while (input.hasNextLine() && index < arraySize) {
+                array[index] = input.nextInt();
+                index++;
+            }
+        }catch(IOException e){
+            System.out.println("File not found");
         }
+        return array;
+    }
+
+    public static double[] toDoubleArray(String filePath, int arraySize) {
+        double[] array = new double[arraySize];
+        try (Scanner input = new Scanner(new File(filePath))) {
+            int index = 0;
+            while (input.hasNextLine() && index < arraySize) {
+                array[index] = input.nextDouble();
+                index++;
+            }
+        }catch(IOException e){
+            System.out.println("File not found");
+        }
+        return array;
+    }
+
+    public static int[] findString(String[] list, String target) {
+        List<Integer> indices = new ArrayList<>();
+        for (int i = 0; i < list.length; i++) {
+            if (list[i].equals(target)) {
+                indices.add(i);
+            }
+        }
+        int[] result = new int[indices.size()];
+        for (int i = 0; i < indices.size(); i++) {
+            result[i] = indices.get(i);
+        }
+        return result;
+    }
+
+    public static String[] birdsWith(String[] list, String target) {
+        int[] indexes = findString(list, target);
+        String[] birdNames = toStringArray("data/names.txt", 98);
+        String[] birds = new String[indexes.length];
+        for(int i = 0; i < indexes.length; i++) {
+            birds[i] = birdNames[indexes[i]];
+        }
+
+        return birds;
+    }
+
+    public static String[] birdsWithDiet(String target){
+        String filePath = "data/diets.txt";
+        int arraySize = 98;
+
+        String[] stringArray = toStringArray(filePath, arraySize);
+        String[] birdNames = birdsWith(stringArray, target);
+        return birdNames;
+    }
+
+    public static String[] birdsWithColor(String target){
+        String filePath = "data/color.txt";
+        int arraySize = 98;
+
+        String[] stringArray = toStringArray(filePath, arraySize);
+        String[] birdNames = birdsWith(stringArray, target);
+        return birdNames;
+    }
+
+    public static String[] birdsWithStatus(String target){
+        String filePath = "data/status.txt";
+        int arraySize = 98;
+
+        String[] stringArray = toStringArray(filePath, arraySize);
+        String[] birdNames = birdsWith(stringArray, target);
+        return birdNames;
+    }
+
+    public static int countInstances(String[] list, String target) {
+        int count = 0;
+        for (int i = 0; i < list.length; i++) {
+            if (list[i].equals(target)) {
+                count++;
+            }
+        }
+        return count;
+    }
     
-        System.out.println("Linear Search: " + linearSearch(list, target));
-        System.out.println("Reverse Search: " + reverseSearch(list, target));
+    public static int countWithColor(String target) {
+        String filePath = "data/color.txt";
+        int arraySize = 98;
 
-        Arrays.sort(list);
+        String[] stringArray = toStringArray(filePath, arraySize);
+        return countInstances(stringArray, target);
+    }
 
-        System.out.println("Binary Search: " + binarySearch(list, target));
+    public static int countWithDiet(String target) {
+        String filePath = "data/diets.txt";
+        int arraySize = 98;
+
+        String[] stringArray = toStringArray(filePath, arraySize);
+        return countInstances(stringArray, target);
+    }
+
+    public static int countWithStatus(String target) {
+        String filePath = "data/status.txt";
+        int arraySize = 98;
+
+        String[] stringArray = toStringArray(filePath, arraySize);
+        return countInstances(stringArray, target);
+    }
+
+    public static double statusPercentage(String target) {
+        String filePath = "data/status.txt";
+        int arraySize = 98;
+
+        String[] stringArray = toStringArray(filePath, arraySize);
+        int count = countInstances(stringArray, target);
+        return (double) count / arraySize * 100;
+    }
+
+    public static void main(String[] args) {
+        // Test countWithDiet method
+        String dietTarget = "Insectivore";
+        int dietCount = countWithDiet(dietTarget);
+        System.out.println("Number of birds with diet " + dietTarget + ": " + dietCount);
+
+        // Test birdsWithColor method
+        String colorTarget = "Red";
+        String[] birdsWithRedColor = birdsWithColor(colorTarget);
+        System.out.println("Birds with color " + colorTarget + ": " + Arrays.toString(birdsWithRedColor));
+
 
     }
 }
