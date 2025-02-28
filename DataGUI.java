@@ -5,8 +5,10 @@ import java.awt.*;
 public class DataGUI extends JFrame {
     private JTextField inputField;
     private JTextArea resultsArea;
+    private World world;
     
     public DataGUI() {
+        world = new World("data/names.txt", "data/color.txt", "data/diets.txt", "data/status.txt");
         setTitle("Bird Data Analyzer");
         setSize(500, 400);
         setLayout(new FlowLayout());
@@ -16,9 +18,9 @@ public class DataGUI extends JFrame {
         JButton analyzeColorButton = new JButton("Analyze by Color");
         JButton analyzeDietButton = new JButton("Analyze by Diet");
         JButton analyzeStatusButton = new JButton("Analyze by Status");
-        JButton commonColorButton = new JButton("Count with Color");
-        JButton commonDietButton = new JButton("Count with Diet");
-        JButton commonStatusButton = new JButton("Count with Status");
+        JButton commonColorButton = new JButton("Find Most Common Color");
+        JButton commonDietButton = new JButton("Find Most Common Diet");
+        JButton commonStatusButton = new JButton("Find Most Common Status");
         JButton statusPercentageButton = new JButton("Status Percentage");
         resultsArea = new JTextArea(10, 40);
         resultsArea.setEditable(false);
@@ -42,48 +44,48 @@ public class DataGUI extends JFrame {
         statusPercentageButton.addActionListener(e -> getStatusPercentage());
     }
 
-    private static String stringify(String[] arr) {
+    private static String stringify(Bird[] arr) {
         String result = "";
-        for(String s : arr) {
+        for(Bird s : arr) {
             result += s + "\n";
         }
         return result;
     }
 
     private void analyzeByColor(){
-        String[] birds = DataAnalyzer.birdsWithColor(inputField.getText());
+        Bird[] birds = world.searchByColor(inputField.getText());
 
         resultsArea.setText("Birds with color " + inputField.getText() + ": \n" + stringify(birds) + "\n");
     }
 
     private void analyzeByDiet(){
-        String[] birds = DataAnalyzer.birdsWithDiet(inputField.getText());
+        Bird[] birds = world.searchByDiet(inputField.getText());
         resultsArea.setText("Birds with diet " + inputField.getText() + ": \n" + stringify(birds) + "\n");
     }
 
     private void analyzeByStatus(){
-        String[] birds = DataAnalyzer.birdsWithStatus(inputField.getText());
+        Bird[] birds = world.searchByStatus(inputField.getText());
         resultsArea.setText("Birds with status " + inputField.getText() + ": \n" + stringify(birds) + "\n");
     }
 
     private void getMostCommonColor(){
-        int count = DataAnalyzer.countWithColor(inputField.getText());
-        resultsArea.setText("Number of birds with color " + inputField.getText() + ": " + count);
+        String count = world.getMostCommonColor();
+        resultsArea.setText("Most common color: " + count);
     }
 
     private void getMostCommonDiet(){
-        int count = DataAnalyzer.countWithDiet(inputField.getText());
-        resultsArea.setText("Number of birds with diet " + inputField.getText() + ": " + count);
+        String count = world.getMostCommonDiet();
+        resultsArea.setText("Most common diet "+ ": " + count);
     }
 
     private void getMostCommonStatus(){
-        int count = DataAnalyzer.countWithStatus(inputField.getText());
-        resultsArea.setText("Number of birds with status " + inputField.getText() + ": " + count);
+        String count = world.getMostCommonStatus();
+        resultsArea.setText("Most common status "+ ": " + count);
     }
 
     private void getStatusPercentage(){
-        double percentage = DataAnalyzer.statusPercentage(inputField.getText());
-        resultsArea.setText("Percentage of birds with status " + inputField.getText() + ": " + percentage + "%");
+        // double percentage = DataAnalyzer.statusPercentage();
+        resultsArea.setText("Percentage of birds with status "+ ": " + "percentage" + "%");
     }
 
     public static void main(String[] args) {
