@@ -1,9 +1,11 @@
+package com.bcts.data;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.io.File;
-import java.io.IOException;
 
 public class DataAnalyzer {
     public static int linearSearch(int[] list, int target) {

@@ -1,4 +1,12 @@
+package com.bcts.data;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "birds")
 public class Bird {
+    @Id
+    private String id;
     private String name;
     private String color;
     private String diet;
@@ -51,6 +59,6 @@ public class Bird {
     }
 
     public String toString() {
-        return "Bird(name=" + name + ", color=" + color + ", diet=" + diet + ", status=" + status + ")";
+        return "name: " + name + ", color: " + color + ", diet: " + diet + ", status: " + status;
     }
 }

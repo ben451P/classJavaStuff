@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Birds</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"/>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="/">Basketball Analytics</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link active" href="/">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="/birds">Birds</a></li>
+                <li class="nav-item"><a class="nav-link" href="/breakdown">Bird Breakdown</a></li>
+                <li class="nav-item"><a class="nav-link" href="/filterBy">Search Birds</a></li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <!-- Team Championships Overview -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="m-0">Championship Distribution</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Color</th>
+                                <th>Diet</th>
+                                <th>Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="bird : ${allBirds}">
+                                <td>
+                                    <a th:text="${bird.name}">Bird Name</a>
+                                </td>
+                                <td>
+                                    <a th:text="${bird.color}">Bird color</a>
+                                </td>
+                                <td>
+                                    <a th:text="${bird.diet}">Bird diet</a>
+                                </td>
+                                <td>
+                                    <a th:text="${bird.status}">Bird status</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
